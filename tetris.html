@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetris 1.0</title>
+    <title>Tetris 1.0.1</title>
     <style>
         body {
             background-color: #1a1a1a;
@@ -25,10 +25,10 @@
         canvas {
             border: 2px solid #333;
             touch-action: none;
-            width: 80vw;
+            width: 90vw;
             height: 60vh;
             max-width: 300px;
-            max-height: 600px;
+            max-height: 500px;
         }
 
         .infos {
@@ -76,31 +76,9 @@
         .control-button:hover {
             background-color: #555;
         }
-
-        #orientation-message {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 1000;
-        }
-
-        @media screen and (orientation: portrait) {
-            #orientation-message {
-                display: block;
-            }
-        }
     </style>
 </head>
 <body>
-    <div id="orientation-message" class="hidden">
-        Veuillez tourner votre téléphone en mode paysage pour jouer.
-    </div>
     <div class="game-container">
         <canvas id="board"></canvas>
         <div class="infos">
@@ -270,7 +248,7 @@
             gameOverElement.classList.add('hidden');
             currentPiece = createPiece();
             if (gameLoop) clearInterval(gameLoop);
-            gameLoop = setInterval(update, window.innerWidth < 600 ? 500 : 1000);
+            gameLoop = setInterval(update, 1000);
         }
 
         function moveLeft() {
