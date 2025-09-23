@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Code Barres</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #7f8c8d;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .result {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            border: 1px dashed #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        
+        #barcode {
+            margin: 20px 0;
+        }
+        
+        .barcode-value {
+            font-family: monospace;
+            font-size: 18px;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            word-break: break-all;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 600px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Générateur de Code Barres</h1>
+        <p class="description">Générez facilement des codes barres pour vos produits</p>
+        
+        <div class="form-group">
+            <label for="productCode">Code du produit :</label>
+            <input type="text" id="productCode" placeholder="Ex: PROD-001, 123456789" maxlength="50">
+        </div>
+        
+        <div class="options">
+            <div class="form-group">
+                <label for="barcodeType">Type de code barres :</label>
+                <select id="barcodeType">
+                    <option value="CODE128">CODE128 (Standard)</option>
+                    <option value="EAN13">EAN-13 (Produits grand public)</option>
+                    <option value="EAN8">EAN-8 (Petits produits)</option>
+                    <option value="UPC">UPC (Amérique du Nord)</option>
+                    <option value="CODE39">CODE39 (Alphanumérique)</option>
+                    <option value="ITF14">ITF-14 (Cartons/logistique)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="barcodeFormat">Format d'affichage :</label>
+                <select id="barcodeFormat">
+                    <option value="css">Avec texte (recommandé)</option>
+                    <option value="image">Image seule</option>
+                </select>
+            </div>
+        </div>
+        
+        <button id="generateBtn" class="btn">Générer le code barres</button>
+        
+        <div class="result" id="result">
+            <h3>Code barres généré :</h3>
+            <svg id="barcode"></svg>
+            <div class="barcode-value" id="barcodeValue"></div>
+            <button id="downloadBtn" class="btn" style="margin-top: 20px; background-color: #27ae60;">Télécharger l'image</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const productCode = document.getElementById('productCode').value.trim();
+            const barcodeType = document.getElementById('barcodeType').value;
+            const barcodeFormat = document.getElementById('barcodeFormat').value;
+            const resultDiv = document.getElementById('result');
+            const barcodeSvg = document.getElementById('barcode');
+            const barcodeValueDiv = document.getElementById('barcodeValue');
+            
+            // Validation
+            if (!productCode) {
+                alert('Veuillez entrer un code produit');
+                return;
+            }
+            
+            // Validation spécifique pour EAN13 (doit avoir 12 ou 13 chiffres)
+            if (barcodeType === 'EAN13' && !/^\d{12,13}$/.test(productCode)) {
+                alert('Le code EAN-13 doit contenir 12 ou 13 chiffres');
+                return;
+            }
+            
+            // Validation spécifique pour EAN8 (doit avoir 7 ou 8 chiffres)
+            if (barcodeType === 'EAN8' && !/^\d{7,8}$/.test(productCode)) {
+                alert('Le code EAN-8 doit contenir 7 ou 8 chiffres');
+                return;
+            }
+            
+            // Validation spécifique pour UPC (doit avoir 11 ou 12 chiffres)
+            if (barcodeType === 'UPC' && !/^\d{11,12}$/.test(productCode)) {
+                alert('Le code UPC doit contenir 11 ou 12 chiffres');
+                return;
+            }
+            
+            // Validation spécifique pour ITF14 (doit avoir 13 ou 14 chiffres)
+            if (barcodeType === 'ITF14' && !/^\d{13,14}$/.test(productCode)) {
+                alert('Le code ITF-14 doit contenir 13 ou 14 chiffres');
+                return;
+            }
+            
+            try {
+                // Générer le code barres
+                JsBarcode("#barcode", productCode, {
+                    format: barcodeType,
+                    displayValue: barcodeFormat === 'css',
+                    fontSize: 16,
+                    background: "transparent",
+                    lineColor: "#2c3e50",
+                    margin: 10,
+                    width: 2,
+                    height: 100
+                });
+                
+                // Afficher la valeur du code
+                barcodeValueDiv.textContent = productCode;
+                
+                // Afficher le résultat
+                resultDiv.style.display = 'block';
+                
+            } catch (error) {
+                alert('Erreur lors de la génération du code barres: ' + error.message);
+            }
+        });
+        
+        // Télécharger l'image du code barres
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const barcodeSvg = document.getElementById('barcode');
+            const productCode = document.getElementById('productCode').value.trim();
+            const barcodeType = document.getElementById('barcodeType').value;
+            
+            // Convertir le SVG en image
+            const svgData = new XMLSerializer().serializeToString(barcodeSvg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                
+                // Créer un lien de téléchargement
+                const a = document.createElement('a');
+                a.download = `code-barres-${productCode}-${barcodeType}.png`;
+                a.href = canvas.toDataURL('image/png');
+                a.click();
+            };
+            
+            img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+        });
+        
+        // Exemple de code pré-rempli pour démonstration
+        document.getElementById('productCode').value = '123456789012';
+    </script>
+</body>
+</html>
