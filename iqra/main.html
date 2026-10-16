@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQRA - Site en construction</title>
+    <style>
+        /* Réinitialisation de base et variables */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e67e22;
+            --text-color: #34495e;
+            --bg-color: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Conteneur Principal */
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Logo / Nom de marque */
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #7f8c8d;
+        }
+
+        /* --- Zone Animation Outils (SVG) --- */
+        .animation-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Animation de la Clé */
+        .wrench {
+            transform-origin: 35px 115px;
+            animation: repairWrench 2.5s ease-in-out infinite;
+        }
+
+        /* Animation du Marteau */
+        .hammer {
+            transform-origin: 115px 115px;
+            animation: repairHammer 2.5s ease-in-out infinite;
+        }
+
+        /* Keyframes CSS pour les outils */
+        @keyframes repairWrench {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-25deg); }
+        }
+
+        @keyframes repairHammer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(30deg); }
+        }
+
+        /* Barre de progression décorative */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            width: 65%;
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+            animation: pulse-progress 2s infinite ease-in-out;
+        }
+
+        /* Pied de page */
+        .footer {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            margin-top: 20px;
+        }
+
+        /* --- Design Responsif --- */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 15px;
+            }
+            .logo {
+                font-size: 2.2rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .animation-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Nom du Site -->
+        <div class="logo">IQ<span>RA</span></div>
+        
+        <!-- Graphique SVG Animé des Outils -->
+        <div class="animation-container">
+            <svg viewBox="0 0 150 150" width="100%" height="100%" xmlns="http://w3.org">
+                <!-- Arrière-plan / Engrenage décoratif passif -->
+                <circle cx="75" cy="75" r="25" fill="none" stroke="#ecf0f1" stroke-width="8" stroke-dasharray="8 4" />
+                
+                <!-- LA CLÉ (Gauche) -->
+                <g class="wrench">
+                    <!-- Manche -->
+                    <rect x="25" y="60" width="16" height="60" rx="5" fill="#95a5a6" transform="rotate(-45 25 60)" />
+                    <!-- Tête de la clé -->
+                    <circle cx="25" cy="60" r="16" fill="#7f8c8d" />
+                    <rect x="17" y="48" width="16" height="12" fill="#ffffff" transform="rotate(-45 25 60)" />
+                </g>
+
+                <!-- LE MARTEAU (Droite) -->
+                <g class="hammer">
+                    <!-- Manche -->
+                    <rect x="105" y="65" width="12" height="65" rx="4" fill="#d35400" transform="rotate(45 105 65)" />
+                    <!-- Tête métallique -->
+                    <rect x="85" y="35" width="45" height="18" rx="3" fill="#7f8c8d" transform="rotate(20 85 35)" />
+                    <!-- Griffe du marteau -->
+                    <path d="M 125,40 Q 140,42 145,55 L 135,50 Z" fill="#7f8c8d" transform="rotate(20 85 35)" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Messages texte -->
+        <h1>Site en cours de développement</h1>
+        <p>Nous préparons une toute nouvelle expérience pour vous. Le site web d'<strong>IQRA</strong> sera bientôt disponible. Merci pour votre patience !</p>
+        
+        <!-- Indicateur visuel -->
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 IQRA. Tous droits réservés.
+        </div>
+    </div>
+
+</body>
+</html>
