@@ -11,9 +11,9 @@ const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",
    CHEMINS DES IMAGES (dans le dossier "image/")
    ============================================================ */
 const IMG = {
-  logo:   "image/logo.png",      // Logo IQRA (utilisé si entete.png absent)
-  entete: "image/entete.png",    // Bandeau d'en-tête complet
-  pied:   "image/pied.png"       // Bandeau de pied de page complet
+  logo:   "Images/icon.png",      // Logo IQRA (utilisé si entete.png absent)
+  entete: "Images/Head.png",    // Bandeau d'en-tête complet
+  pied:   "Images/food.png"       // Bandeau de pied de page complet
 };
 
 /* ============================================================
