@@ -1,0 +1,232 @@
+/* ============================================================
+   VARIABLES & THÈME
+   ============================================================ */
+:root{
+  --bg:#f2f5f3;--card:#fff;--tx:#1d2733;--mu:#667585;--br:#d9e0e8;
+  --pr:#0f5a45;--ac:#c9a227;--rw:#f1f6f3;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#10161d;--card:#1a232d;--tx:#e6ebf0;--mu:#97a5b3;--br:#2e3b49;
+    --pr:#2f9d78;--rw:#202b37;
+  }
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:#0f5a45;color:#fff;padding:16px 20px}
+header h1{margin:0;font-size:19px}
+header p{margin:2px 0 0;opacity:.85;font-size:13px}
+main{max-width:1200px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--br);border-radius:10px;padding:14px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:15px}
+
+/* ============================================================
+   FORMULAIRES & BOUTONS
+   ============================================================ */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+label{display:block;font-size:12px;color:var(--mu);margin-bottom:3px}
+input,textarea{width:100%;padding:7px 8px;border:1px solid var(--br);border-radius:6px;background:var(--card);color:var(--tx);font:inherit}
+button{padding:8px 13px;border:1px solid var(--pr);background:var(--pr);color:#fff;border-radius:6px;font:inherit;cursor:pointer}
+button.sec{background:transparent;color:var(--pr)}
+button.ac{background:var(--ac);border-color:var(--ac);color:#222}
+button.ic{padding:4px 8px;font-size:12px}
+button.del{border-color:#b3382c;color:#b3382c;background:transparent}
+button.delAll{padding:8px 13px;border:1px solid #b3382c;background:transparent;color:#b3382c;border-radius:6px;font:inherit;cursor:pointer}
+button.delAll:hover{background:#b3382c;color:#fff}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sp{flex:1}
+.wrap{overflow-x:auto;position:relative}
+textarea{min-height:90px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+
+/* ============================================================
+   TABLEAU
+   ============================================================ */
+table.t{border-collapse:separate;border-spacing:0;width:100%;min-width:1000px;font-size:13px}
+.t th{background:var(--pr);color:#fff;padding:6px 4px;font-weight:600;border:1px solid var(--br)}
+.t th.m{background:#1d7a5d}
+.t td{border:1px solid var(--br);padding:2px 3px;text-align:center;background:var(--card)}
+.t tbody tr:nth-child(even) td{background:var(--rw)}
+.t td input{border:0;background:transparent;padding:5px 4px;text-align:center}
+.t td.l input{text-align:left}
+td.c{font-weight:600;padding:4px 6px;white-space:nowrap}
+td.g{background:rgba(201,162,39,.18)!important}
+.low{color:#b3382c}
+.hi{color:#1e7d4f}
+#msg{font-size:13px;color:var(--mu);margin-top:8px;min-height:18px}
+.stats{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--mu)}
+.stats b{color:var(--tx)}
+#pw{overflow:hidden;margin:0 auto}
+#ps{transform-origin:0 0}
+
+/* Colonne d'actions fixe */
+.t th.actions-h, .t td.actions-c{
+  position:sticky;right:0;z-index:2;
+  background:var(--card);
+  box-shadow:-6px 0 8px -6px rgba(0,0,0,.25);
+}
+.t th.actions-h{background:var(--pr);color:#fff;z-index:3}
+.t tbody tr:nth-child(even) td.actions-c{background:var(--rw)}
+.t td.actions-c{white-space:nowrap;text-align:center}
+
+/* ============================================================
+   BULLETIN — reproduction fidèle du modèle IQRA
+   ============================================================ */
+.bul{
+  width:794px;height:1123px;
+  background:#fffef8;
+  color:#17332b;
+  font-family:"Segoe UI","Noto Naskh Arabic",Tahoma,Arial,sans-serif;
+  padding:0;
+  position:relative;
+  font-size:13px;
+  overflow:hidden;
+  border:2px solid #0f5a45;
+}
+
+/* En-tête : image complète entete.png */
+.bul .entete{
+  width:100%;
+  display:block;
+  height:auto;
+}
+
+/* Corps du bulletin */
+.bul .corps{
+  padding:8px 26px 0;
+}
+
+/* Bandeau titre (si non fourni dans l'image d'en-tête) */
+.bul .bn{
+  background:#0f5a45;color:#fff;
+  border-radius:26px;text-align:center;
+  padding:7px 10px;margin:6px 0 6px;
+  border:2px solid #c9a227;
+  position:relative;
+}
+.bul .bn::before,.bul .bn::after{
+  content:"❖";color:#c9a227;position:absolute;top:50%;transform:translateY(-50%);
+  font-size:13px;
+}
+.bul .bn::before{left:14px}
+.bul .bn::after{right:14px}
+.bul .bn b{font:800 20px Georgia,serif;letter-spacing:1.5px}
+.bul .bn span{
+  font:700 19px "Noto Naskh Arabic",Tahoma;margin-left:14px;direction:rtl;
+  display:inline-block;vertical-align:middle;
+}
+
+/* Niveau */
+.bul .lv{
+  width:340px;margin:0 auto 8px;text-align:center;
+  background:#f3ecc8;border:1px solid #c9a227;border-radius:14px;
+  padding:3px;font-size:12px;font-weight:600;color:#0f5a45;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.bul .lv::before,.bul .lv::after{content:"❖";color:#c9a227;font-size:11px}
+
+/* Bloc générique */
+.bul .box{
+  border:1.5px solid #0f5a45;border-radius:8px;overflow:hidden;
+  margin-bottom:8px;background:#fff;
+}
+.bul .bt{
+  background:#0f5a45;color:#fff;padding:4px 12px;font-weight:700;
+  font-size:12.5px;letter-spacing:.5px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.bul .bt .a{font-family:"Noto Naskh Arabic",Tahoma;direction:rtl;font-size:13px}
+
+/* Infos élève */
+.bul .ib{display:flex}
+.bul .ig{
+  flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;
+  padding:8px 14px;
+}
+.bul .ig div{font-size:12px}
+.bul .ig span{
+  display:flex;justify-content:space-between;color:#5a7068;font-size:10.5px;
+}
+.bul .ig em{font:normal 10.5px "Noto Naskh Arabic",Tahoma;direction:rtl}
+.bul .ig b{
+  display:block;font-size:13.5px;margin-top:1px;color:#0f5a45;
+  border-bottom:1px dotted #cfd9d4;padding-bottom:1px;
+}
+.bul .qt{
+  width:190px;border-left:1px solid #cfd9d4;padding:8px;
+  text-align:center;font-size:10.5px;font-style:italic;color:#0f5a45;
+  display:flex;flex-direction:column;justify-content:center;gap:6px;
+  background:#f8f6ec;
+}
+.bul .qt .arr{font:600 12px/1.5 "Noto Naskh Arabic",Tahoma;direction:rtl;font-style:normal}
+.bul .qt img{max-width:100%;height:auto}
+
+/* Tableau des notes */
+.bul table{width:100%;border-collapse:collapse}
+.bul th{
+  background:#0f5a45;color:#fff;padding:5px 3px;font-size:11.5px;
+  border:1px solid #fff;line-height:1.2;font-weight:700;
+}
+.bul th small{display:block;font-weight:400;font-size:9.5px;opacity:.9}
+.bul td{
+  border:1px solid #cfd9d4;text-align:center;padding:5px 4px;font-size:13px;
+}
+.bul td.fr{text-align:left;font-weight:700;padding-left:12px}
+.bul td.ar{
+  font:700 14px "Noto Naskh Arabic",Tahoma;direction:rtl;
+  text-align:right;padding-right:12px;
+}
+.bul .arr{font:600 12px "Noto Naskh Arabic",Tahoma;direction:rtl}
+.bul td.ap{font-weight:700;font-size:11.5px;line-height:1.25}
+.bul .e1{background:#dcefe3}
+.bul .e2{background:#e8f3df}
+.bul .e3{background:#fbf1c9}
+.bul .e4{background:#fde5c8}
+.bul .e5{background:#f9d6d2}
+.bul tr.tg td{
+  background:#0f5a45;color:#fff;font-weight:800;
+  border-color:#0f5a45;font-size:12.5px;
+}
+
+/* Bloc moyenne / décision / rang */
+.bul .mg{display:flex;gap:8px;margin-bottom:8px}
+.bul .mg>div{
+  border:1.5px solid #0f5a45;border-radius:8px;background:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 12px;
+}
+.bul .mg .m{flex:1.4;font-weight:700;font-size:12px}
+.bul .mg .m big{font:800 26px Georgia,serif;color:#0f5a45;margin-left:6px}
+.bul .dc{
+  flex:1;flex-direction:column;font-size:10.5px;text-align:center;
+  justify-content:center!important;gap:3px;
+}
+.bul .dc strong{
+  display:block;margin-top:2px;padding:3px 14px;border-radius:6px;
+  font-size:14px;
+}
+.bul .adm{background:#dcefe3;color:#0f5a45}
+.bul .ajn{background:#f9d6d2;color:#a3281c}
+.bul .rdb{background:#fde5c8;color:#8a5a00}
+
+/* Appréciation générale */
+.bul .gp{padding:6px 12px;font-size:11.5px;line-height:1.45}
+.bul .gp .a{
+  direction:rtl;text-align:right;font:12px/1.6 "Noto Naskh Arabic",Tahoma;
+  margin-top:4px;color:#0f5a45;
+}
+
+/* Pied de page : image complète pied.png */
+.bul .pied{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  width:100%;
+  display:block;
+  height:auto;
+}
